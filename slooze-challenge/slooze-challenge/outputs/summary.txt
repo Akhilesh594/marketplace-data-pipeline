@@ -1,0 +1,98 @@
+════════════════════════════════════════════════════════════
+  SLOOZE DATA ENGINEERING CHALLENGE — EDA SUMMARY
+  Generated: 2026-06-11 11:15 UTC
+════════════════════════════════════════════════════════════
+
+📊  OVERVIEW
+────────────────────────────────────────────────────────────
+  Total products:      701
+  Unique suppliers:    12
+  Price availability:  37.2%
+  Location coverage:   89.9%
+
+  Price (across all categories):
+    Mean:      75,860.73
+    Median:    20,215.97
+    Std:      123,087.72
+    Range:  142.66 – 477,138.88
+
+📦  PRODUCTS BY SOURCE
+────────────────────────────────────────────────────────────
+  alibaba                 357
+  indiamart               344
+
+🗂   PRODUCTS BY CATEGORY
+────────────────────────────────────────────────────────────
+  Electronics                       149
+  Agriculture                       144
+  Industrial Machinery              142
+  Textiles                          135
+  Chemical                          131
+
+💰  CATEGORY PRICE ANALYSIS
+────────────────────────────────────────────────────────────
+  Category                     Avg Price       Median    Count
+  ----------------------------------------------------------
+  Agriculture                  53,770.35    61,715.47       56
+  Electronics                  24,427.14    23,484.27       54
+  Industrial Machinery        280,290.09   301,477.57       53
+  Chemical                     10,082.49     9,604.47       51
+  Textiles                      2,124.76     1,690.99       47
+
+🔍  HYPOTHESIS: DOES SUPPLIER REGION PREDICT PRICE?
+────────────────────────────────────────────────────────────
+  Regions ranked by average listing price (top 10):
+  Delhi                          avg= 79,397.70  n=29
+  Hyderabad                      avg= 77,538.53  n=27
+  Kolkata                        avg= 45,892.32  n=27
+  Fujian                         avg=       nan  n=0
+  Guangdong                      avg=       nan  n=0
+  Hebei                          avg=       nan  n=0
+  Henan                          avg=       nan  n=0
+  Jiangsu                        avg=       nan  n=0
+  Shandong                       avg=       nan  n=0
+  Shanghai                       avg=       nan  n=0
+
+  → If top-ranked regions skew significantly higher, this supports
+    the hypothesis that geography drives pricing strategy.
+
+⚠️   PRICE ANOMALIES DETECTED: 32 records
+────────────────────────────────────────────────────────────
+  (Listings outside Q1 – 3×IQR / Q3 + 3×IQR bounds)
+  [price too high] Suprema Hydraulic Max Pump               price=359429.71
+  [price too high] Heavy Duty Alpha Press Machine           price=353763.06
+  [price too high] Heavy Duty Industrial Press Machine      price=343356.09
+  [price too high] Globalmech Hydraulic Max Pump            price=282877.23
+  [price too high] Automatic Pro Conveyor Belt System       price=477138.88
+  [price too high] Rexon Industrial Cnc Machine 2024        price=301477.57
+  [price too high] Heavy Duty Max Press Machine             price=268689.55
+  [price too high] Heavy Duty Pro Press Machine             price=401293.29
+  [price too high] Automatic Industrial Conveyor Belt Syste price=393114.95
+  [price too high] Indopower Industrial Cnc Machine Series3 price=464864.07
+
+🔑  TOP 10 PRODUCT TITLE KEYWORDS
+────────────────────────────────────────────────────────────
+  industrial              256
+  ultra                   112
+  alpha                   107
+  grade                   100
+  pro                      98
+  lite                     96
+  max                      94
+  machine                  72
+  suprema                  62
+  globalmech               62
+
+💡  KEY INSIGHTS
+────────────────────────────────────────────────────────────
+  1. Price data completeness reveals how transparent suppliers are —
+     low completeness suggests many listings use 'Get Price' tactics.
+  2. Location × Category heatmap shows regional specialisation patterns.
+  3. Keyword frequency exposes dominant product sub-types per market.
+  4. Anomalous prices often indicate data quality gaps (wrong units,
+     currency mismatches) rather than genuine outlier products.
+  5. Cross-source comparison (IndiaMART vs Alibaba) reveals whether
+     the same categories are positioned differently for domestic
+     vs. international buyers.
+
+════════════════════════════════════════════════════════════
