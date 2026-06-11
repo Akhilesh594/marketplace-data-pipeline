@@ -171,6 +171,3 @@ After running EDA, `outputs/` contains:
 
 ---
 
-## Contact / Submission
-
-careers@slooze.xyz
