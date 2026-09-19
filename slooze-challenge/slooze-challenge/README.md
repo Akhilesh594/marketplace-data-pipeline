@@ -1,4 +1,4 @@
-# Slooze Data Engineering Challenge
+# Marketplace Data Pipeline
 
 A production-quality, end-to-end data engineering pipeline that:
 
