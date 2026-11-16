@@ -1,0 +1,12 @@
+project: olist_ml
+provider: local
+registry: data/registry.db
+offline_store:
+  type: bigquery
+  project_id: ${GCP_PROJECT_ID}
+  billing_project_id: ${GCP_PROJECT_ID}
+  dataset: olist_feast_work
+  location: US
+online_store:
+  type: sqlite
+  path: data/online_store.db

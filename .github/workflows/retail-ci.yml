@@ -1,0 +1,44 @@
+name: Retail platform checks
+on:
+  push:
+    paths: ['retail-platform/**', '.github/workflows/retail-ci.yml']
+  pull_request:
+    paths: ['retail-platform/**', '.github/workflows/retail-ci.yml']
+permissions:
+  contents: read
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: retail-platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python sources
+        run: python -m compileall -q orchestration feature_platform scripts
+      - name: Test Airbyte monitoring and retries without network access
+        run: PYTHONPATH=orchestration python -m unittest discover -s orchestration/tests -v
+      - name: Test feature comparison correctness
+        run: PYTHONPATH=feature_platform python -m unittest discover -s feature_platform/tests -v
+      - name: Check publication boundaries
+        run: python scripts/check_publication.py
+  dagster-definitions:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: retail-platform
+    env:
+      DAGSTER_TELEMETRY_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r orchestration/requirements.txt
+      - run: python orchestration/validate_definitions.py
+
+# Warehouse builds and ingestion intentionally stay out of public CI:
+# no production credentials, BigQuery jobs, or Airbyte refreshes on pushes/PRs.

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        data_tests:
+          - not_null
+          - unique
+  - name: stg_products
+    columns:
+      - name: product_id
+        data_tests:
+          - not_null
+          - unique
+  - name: stg_sellers
+    columns:
+      - name: seller_id
+        data_tests:
+          - not_null
+          - unique
+  - name: stg_category_translation
+    columns:
+      - name: product_category_name
+        data_tests:
+          - not_null
+          - unique
+  - name: stg_order_items
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+  - name: stg_order_payments
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+  - name: stg_order_reviews
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      - name: review_score
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
+  - name: stg_geolocation
+    columns:
+      - name: geolocation_zip_code_prefix
+        data_tests:
+          - not_null

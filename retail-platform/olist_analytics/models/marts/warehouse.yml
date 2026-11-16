@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Customer profile per source customer_id; customer_unique_id tracks repeat buyers. Type 2 history will be added separately."
+    columns:
+      - name: customer_key
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_product
+    description: "Product details with category translation when available."
+    columns:
+      - name: product_key
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_store
+    description: "Marketplace seller used as the store equivalent."
+    columns:
+      - name: store_key
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_date
+    description: "Calendar covering all order purchase dates."
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - unique
+  - name: fact_sales
+    description: "One row per order item; retains all statuses and excludes any claimed profit or margin."
+    columns:
+      - name: sale_key
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: product_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_key
+      - name: store_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_store')
+                field: store_key
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key

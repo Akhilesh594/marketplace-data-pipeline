@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: dim_customer_history
+    columns:
+      - name: customer_version_key
+        data_tests:
+          - unique
+          - not_null
+      - name: valid_from
+        data_tests:
+          - not_null
+      - name: customer_unique_id
+        data_tests:
+          - not_null
+  - name: fact_sales_history
+    columns:
+      - name: sale_key
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_version_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer_history')
+                field: customer_version_key
+  - name: metrics_daily_sales
+    columns:
+      - name: sales_date
+        data_tests:
+          - unique
+          - not_null
+  - name: metrics_customer_summary
+    columns:
+      - name: customer_unique_id
+        data_tests:
+          - unique
+          - not_null
